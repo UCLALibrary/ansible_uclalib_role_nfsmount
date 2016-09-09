@@ -1,0 +1,5 @@
+---
+nfsutils: nfs-utils
+nfsmountuser: root
+nfsmountgroup: root
+nfsvers: 3
