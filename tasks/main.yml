@@ -6,7 +6,7 @@
   service: name=rpcbind state=started
 
 - name: Create mountpoint before mounting
-  file: path={{ nfsmountpoint }} state=directory owner={{ nfsmountuser }} group={{ nfsmountgroup }} mode=0755 recurse=yes
+  file: path={{ nfsmountpoint }} state=directory owner={{ nfsmountuser }} group={{ nfsmountgroup }} mode=0755
   when: nfsmountpoint is defined
 
 - name: Mount single nfs path
