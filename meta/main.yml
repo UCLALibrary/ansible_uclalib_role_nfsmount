@@ -1,13 +1,11 @@
 ---
 galaxy_info:
   author: Anthony Vuong
-  description: Ansible playbook to install NFS.
-  license: BSD 3-Clause
-  min_ansible_version: 1.2
+  description: A role to configure mountpoints
+  company: UCLA Library
+  license: See License File
+  min_ansible_version: 2.7
   platforms:
-  - name: EL
-    versions:
-    - 6
-  categories:
-  - system
-dependencies: []
+    - name: CentOS
+      versions:
+        - 7

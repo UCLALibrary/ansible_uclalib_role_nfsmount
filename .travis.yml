@@ -1,0 +1,27 @@
+---
+sudo: required
+language: python
+
+branches:
+  only:
+    - master
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get -qq update
+
+install:
+  - pip3 install molecule docker
+
+# This is only running lint instead of test because we do not have a NFS server configured to test the mounts
+script:
+  - molecule lint
+
+notifications:
+  email:
+    recipients:
+      - avuong@cachemeoutside.io
+    on_success: change
+    on_failure: change

@@ -1,14 +1,30 @@
 ---
 - name: Install nfs utilities
-  yum: name={{ nfsutils }} state=present
+  yum:
+    name: nfs-utils
+    state: present
 
 - name: Start rpcbind
-  service: name=rpcbind state=started
+  service:
+    name: rpcbind
+    state: started
 
-- name: Create mountpoint before mounting
-  file: path={{ nfsmountpoint }} state=directory owner={{ nfsmountuser }} group={{ nfsmountgroup }} mode=0755
-  when: nfsmountpoint is defined
+- name: Create mountpoints before mounting
+  file:
+    path: "{{ item.value.mountpoint }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_dict: "{{ nfs_mounts }}"
+  when: nfs_mounts is defined
 
-- name: Mount single nfs path
-  mount: state="present" fstype="nfs" opts="vers={{ nfsvers }},_netdev,intr,hard,nosuid,noexec" src={{ nfssrc }} name={{ nfsmountpoint }}
-  when: nfssrc is defined and nfsmountpoint is defined
+- name: Mount paths
+  mount:
+    state: present
+    fstype: "{{ item.value.type }}"
+    opts: "{{ item.value.opt }}"
+    src: "{{ item.value.src }}"
+    path: "{{ item.value.mountpoint }}"
+  with_dict: "{{ nfs_mounts }}"
+  when: nfs_mounts is defined
